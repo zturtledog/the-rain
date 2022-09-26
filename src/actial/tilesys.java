@@ -5,6 +5,7 @@ import tiles.tile;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
+    public int width = 1;
 
     public void draw(renderer context) {
     }

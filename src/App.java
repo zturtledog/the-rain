@@ -18,8 +18,6 @@ public class App {
         new renderer(400, 400, "The Rain", "src/resources/tiles/dirt.png") {
             //tile varibles
             tilesys tilemaj;
-
-            int wid = 3;
             
             @Override
             public void init() {
@@ -29,8 +27,6 @@ public class App {
 
                 //.init tiles
                 tilemaj.regis("dirt", new tile("src/resources/tiles/dirt.png"));
-
-                wid = 3;
             }
 
             @Override
@@ -46,7 +42,8 @@ public class App {
                 int off = getoff()-(padding*2);
 
                 //tules
-                tilemaj.resize(this, (int)off/wid);
+                
+                tilemaj.resize(this, (int)off/tilemaj.width);
             }
             
             public static int getoff() {
