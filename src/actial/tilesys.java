@@ -15,7 +15,7 @@ public class tilesys {
     }
 
     public void regis(String name, tile inst) {
-        //
+        tiles.put(name, inst);
     }
 
     public void save(savobj save) {
