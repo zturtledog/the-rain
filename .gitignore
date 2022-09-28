@@ -1,2 +1,4 @@
 bin
 bin/actial/tilesys.class
+./bin
+/bin

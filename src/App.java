@@ -42,8 +42,10 @@ public class App {
                 int off = getoff()-(padding*2);
 
                 //tules
-                
-                tilemaj.resize(this, (int)off/tilemaj.width);
+
+                int ss = (int)off/tilemaj.width;
+                ss-=ss%32;
+                tilemaj.resize(this, ss);
             }
             
             public static int getoff() {

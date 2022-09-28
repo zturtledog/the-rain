@@ -11,15 +11,23 @@ public class tile {
     Image img;
     Image nimg;
     Texture texture;
+    String src;
 
     public tile(String tex) {
+        src = tex;
         img = LoadImage(tex);
         texture = LoadTextureFromImage(img);
         nimg = img;
     }
 
     public void resize(renderer context, int s) {
+        System.out.println("xpanse");
+
         nimg = img;
+
+        //no clue if this does anything
+        texture.close();
+        
         ImageResizeNN(nimg, s, s);
         texture = LoadTextureFromImage(nimg); 
     }
