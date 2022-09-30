@@ -15,7 +15,7 @@ public class App {
     static int padding = 40;
 
     public static void main(String args[]) {
-        new renderer(400, 400, "May The Garden Ever Grow", "src/resources/tiles/dirt.png") {
+        new renderer(400, 400, "May The Garden Ever Grow", "src/resources/tiles/undiscovererd.png") {
             //tile varibles
             tilesys tilemaj;
             
@@ -26,7 +26,8 @@ public class App {
                 tilemaj = new tilesys();
 
                 //.init tiles
-                tilemaj.regis("air", new tile("src/resources/default.png"));
+                tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
+                tilemaj.regis("air", new tile("src/resources/special/base.png"));
                 tilemaj.regis("dirt", new tile("src/resources/tiles/dirt.png"));
             }
 

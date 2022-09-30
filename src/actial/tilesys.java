@@ -15,7 +15,7 @@ public class tilesys {
     public int maxwidth = 9;
     public int minwidth = 3;
 
-    public ArrayList<String> tls;
+    public ArrayList<ArrayList<String>> tls = new ArrayList<ArrayList<String>>();
 
     private tile shadow;
 
@@ -24,28 +24,30 @@ public class tilesys {
     private int size;
 
     public tilesys() {
-        shadow = new tile("src/resources/shadow.png");
+        shadow = new tile("src/resources/special/shadow.png");
     }
 
     public void draw(renderer context) {
-        if (width<minwidth) {
+        if (width < minwidth) {
             width = maxwidth;
         }
 
-        int step = (((int) bob.step())/12)-12;
+        int step = (((int) bob.step()) / 12) - 12;
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
+                // acidental triginometry
                 // j*s/2-(i*s/2)
                 // i*s/4+(j*(s/4))
                 int x = (((j * (size / 2) - (i * size / 2)) - size / 2) + GetScreenWidth() / 2);
-                int y = (((i * (size / 4) + (j * (size / 4)))) + ((GetScreenHeight() / 2) - ((width * (size / 2)) / 2 + size / 4)));
+                int y = (((i * (size / 4) + (j * (size / 4))))
+                        + ((GetScreenHeight() / 2) - ((width * (size / 2)) / 2 + size / 4)));
 
-                //TODO: redo renderer
+                // TODO: redo renderer
 
-                shadow.draw(context, x, y+size/8);
-                tiles.get("air").draw(context, x, (int) (y+step));
-                
+                shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
+                tiles.get("undisc").draw(context, x, (int) (y + step));
+
             }
         }
     }
@@ -62,7 +64,7 @@ public class tilesys {
 
     public void incwidth() {
         width++;
-        if (width>maxwidth) {
+        if (width > maxwidth) {
             width = maxwidth;
         }
     }
