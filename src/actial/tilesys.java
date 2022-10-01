@@ -11,7 +11,7 @@ import tiles.tile;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
-    public int width = 5;
+    public int width = 12;
     public int maxwidth = 9;
     public int minwidth = 3;
 

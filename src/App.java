@@ -47,7 +47,7 @@ public class App {
 
                 int ss = (int)off/tilemaj.width;
                 ss-=ss%32;
-                tilemaj.resize(this, ss);
+                tilemaj.resize(this, ss==0?32:ss);
             }
             
             public static int getoff() {
