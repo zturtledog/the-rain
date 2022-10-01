@@ -35,4 +35,5 @@ public class tile {
     public void draw(renderer context, int x, int y) {
         DrawTexture(texture, x, y, new Color(255,255,255,255)); 
     }
+    public void update(renderer context, int i, int j) {}
 }

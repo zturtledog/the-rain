@@ -1,6 +1,5 @@
 package actial;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import animation.tween;
@@ -11,11 +10,11 @@ import tiles.tile;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
-    public int width = 12;
+    public int width = 3;
     public int maxwidth = 9;
     public int minwidth = 3;
 
-    public ArrayList<ArrayList<String>> tls = new ArrayList<ArrayList<String>>();
+    public String[][] tls = new String[width+1][width+1];
 
     private tile shadow;
 
@@ -25,12 +24,26 @@ public class tilesys {
 
     public tilesys() {
         shadow = new tile("src/resources/special/shadow.png");
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                tls[i][j] = "undisc";
+            }
+        }
     }
 
+    // int tmer = 0;
     public void draw(renderer context) {
         if (width < minwidth) {
             width = maxwidth;
         }
+
+        // tmer++;
+        // if (tmer > 500) {
+        //     incwidth(context);
+        //     tmer=0;
+        // }
+        // System.out.println(tmer);
 
         int step = (((int) bob.step()) / 12) - 12;
 
@@ -43,11 +56,9 @@ public class tilesys {
                 int y = (((i * (size / 4) + (j * (size / 4))))
                         + ((GetScreenHeight() / 2) - ((width * (size / 2)) / 2 + size / 4)));
 
-                // TODO: redo renderer
-
                 shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
-                tiles.get("undisc").draw(context, x, (int) (y + step));
-
+                tiles.get(tls[i][j]).draw(context, x, (int) (y + step));
+                tiles.get(tls[i][j]).update(context, i, j);
             }
         }
     }
@@ -62,11 +73,33 @@ public class tilesys {
         tiles.put(name, inst);
     }
 
-    public void incwidth() {
-        width++;
+    public void incwidth(renderer context) {
+        context.resized();
+
+        width+=2;
         if (width > maxwidth) {
             width = maxwidth;
+            return;
         }
+
+        String[][] newtls = new String[width+1][width+1];
+
+        for (int i = 0; i < width+1; i++) {
+            for (int j = 0; j < width+1; j++) {
+                newtls[i][j] = "undisc";
+            }
+        }
+
+        // System.out.println(tls.length+"::"+tls[0].length+"::"+width);
+
+        for (int i = 0; i < width-2; i++) {
+            for (int j = 0; j < width-2; j++) {
+                newtls[i+1][j+1] =  
+                tls[i][j];
+            }
+        }
+
+        tls = newtls;
     }
 
     public void save(savobj save) {
