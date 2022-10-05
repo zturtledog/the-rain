@@ -15,7 +15,7 @@ public class App {
     static int padding = 40;
 
     public static void main(String args[]) {
-        new renderer(400, 400, "May The Garden Ever Grow", "src/resources/tiles/undiscovererd.png") {
+        new renderer(400, 400, "May The Garden Ever Grow", "src/resources/special/dirt.png") {
             //tile varibles
             tilesys tilemaj;
             
@@ -29,8 +29,10 @@ public class App {
 
                 //.init tiles
                 tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
-                tilemaj.regis("air", new tile("src/resources/special/base.png"));
-                tilemaj.regis("dirt", new tile("src/resources/tiles/dirt.png"));
+                
+                // tilemaj.set(1,1,"dirt");
+
+                tilemaj.incwidth(this);
             }
 
             @Override
@@ -39,6 +41,11 @@ public class App {
 
                 //draw
                 tilemaj.draw(this);
+
+                //reveals
+                if (tilemaj.iselect && tilemaj.at(tilemaj.selection) == "undisc") {
+                    // tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, "dirt");
+                }
             }
 
             @Override

@@ -3,34 +3,44 @@ package actial;
 import java.util.HashMap;
 
 import animation.tween;
-import actial.intersect;
 import actial.intersect.point;
-import actial.debugdraw;
-
 import static com.raylib.Raylib.*;
 
 import tiles.tile;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
-    public int width = 3;
+    public int width = 1;
     public int maxwidth = 9;
     public int minwidth = 3;
-
-    public String[][] tls = new String[width + 1][width + 1];
-
-    private tile shadow;
-
-    private tween bob = new tween(102, -102);
-
     private int size;
 
+    //.grid
+    public tldata[][] tls = new tldata[width + 1][width + 1];
+
+    //#convenient, but unnesisary 
+    private tween bob = new tween(102, -102);
+    private tile shadow;
+    private tile selectile;
+
+    //.selection interface
+    public point selection = new point(0, 0);
+    public boolean iselect = false;
+    
+
+    //.init
     public tilesys init() {
         shadow = new tile("src/resources/special/shadow.png");
+        selectile = new tile("src/resources/special/base.png");
+
+        if (width < minwidth) {
+            width = minwidth;
+            tls = new tldata[width + 1][width + 1];
+        }
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
-                tls[i][j] = "undisc";
+                tls[i][j] = new tldata();
             }
         }
         return this;
@@ -39,7 +49,7 @@ public class tilesys {
     // int tmer = 0;
     public void draw(renderer context) {
         if (width < minwidth) {
-            width = maxwidth;
+            width = minwidth;
         }
 
         // tmer++;
@@ -49,7 +59,7 @@ public class tilesys {
         // }
         // System.out.println(tmer);
 
-        boolean ioverstep = false;
+        iselect = false;
 
         int step = (((int) bob.step()) / 12) - 12;
 
@@ -64,9 +74,14 @@ public class tilesys {
 
                 // .draw
 
-                shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
-                tiles.get(tls[i][j]).draw(context, x, (int) (y + step));
-                tiles.get(tls[i][j]).update(context, i, j);
+                try {
+                    shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
+                    tiles.get(tls[i][j].id).draw(context, x, (int) (y + step));
+                    tiles.get(tls[i][j].id).update(context, i, j);
+                } catch (Exception e) {
+                    System.out.println("Invalid tile id");
+                    System.exit(0);
+                }
 
                 // ?box colom.x
                 // debugdraw.quad(new point(x,y+step), new point(x+size,y+step), new
@@ -81,32 +96,37 @@ public class tilesys {
                 point blf = new point(x, y + step + (size / 4) + (size / 2));
 
                 // debug
-                debugdraw.quad(lf, tp, rt, bt);
-                if (i + 1 >= width)
-                    debugdraw.quad(lf, bt, bbt, blf);
-                if (j + 1 >= width)
-                    debugdraw.quad(rt, bt, bbt, brt);
+                // debugdraw.quad(lf, tp, rt, bt);
+                // if (i + 1 >= width)
+                //     debugdraw.quad(lf, bt, bbt, blf);
+                // if (j + 1 >= width)
+                //     debugdraw.quad(rt, bt, bbt, brt);
 
                 if ((intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY()))) ||
                         (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
-                        (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY()))) && !ioverstep) {
-                    tiles.get("air").draw(context, x, y + step);
-                    ioverstep = true;
+                        (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY()))) && !iselect) {
+                    selectile.draw(context, x, y + step);
+                    iselect = true;
+                    selection = new point(i, j);
                 }
             }
         }
     }
 
+    //.resize all textures
     public void resize(renderer context, int s) {
         size = s;
         tiles.forEach((k, v) -> v.resize(context, s));
         shadow.resize(context, s);
+        selectile.resize(context, s);
     }
 
+    //.register a tile
     public void regis(String name, tile inst) {
         tiles.put(name, inst);
     }
 
+    //.increment width
     public void incwidth(renderer context) {
         context.resized();
 
@@ -116,11 +136,11 @@ public class tilesys {
             return;
         }
 
-        String[][] newtls = new String[width + 1][width + 1];
+        tldata[][] newtls = new tldata[width + 1][width + 1];
 
         for (int i = 0; i < width + 1; i++) {
             for (int j = 0; j < width + 1; j++) {
-                newtls[i][j] = "undisc";
+                newtls[i][j] = new tldata();
             }
         }
 
@@ -142,5 +162,17 @@ public class tilesys {
     public savobj load() {
         // TODO: load
         return new savobj();
+    }
+
+    public void set(int i, int j, String string) {
+        tls[i][j].id = string;
+    }
+
+    public String at(point slct) {
+        return tls[slct.x][slct.y].id;
+    }
+
+    public class tldata {
+        public String id = "undisc";
     }
 }

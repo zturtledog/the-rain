@@ -19,7 +19,7 @@ public class intersect {
         return Math.abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
     }
 
-    static class point {
+    public static class point {
         public int x;
         public int y;
 
