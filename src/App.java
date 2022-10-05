@@ -29,8 +29,9 @@ public class App {
 
                 //.init tiles
                 tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
+                tilemaj.regis("desert", new tile("src/resources/tiles/desert.png"));
                 
-                // tilemaj.set(1,1,"dirt");
+                tilemaj.set(1,1,"desert");
             }
 
             @Override
@@ -42,7 +43,7 @@ public class App {
 
                 //reveals
                 if (tilemaj.iselect && tilemaj.at(tilemaj.selection) == "undisc") {
-                    // tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, "dirt");
+                    // tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, "desert");
                 }
             }
 

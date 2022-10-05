@@ -76,12 +76,12 @@ public class tilesys {
 
                 // .draw
 
-                try {
+                if (tiles.containsKey(tls[i][j].id)) {
                     shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
                     tiles.get(tls[i][j].id).draw(context, x, (int) (y + step));
                     tiles.get(tls[i][j].id).update(context, tls[i][j], i, j, x, y);
-                } catch (Exception e) {
-                    System.out.println("Invalid tile id");
+                } else{
+                    System.out.println("Invalid tile id: '"+tls[i][j].id+"'");
                 }
 
                 // ?box colom.x
