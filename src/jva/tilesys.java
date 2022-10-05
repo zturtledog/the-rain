@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import jva.animation.tween;
+import jva.decorations.deco;
 import jva.libish.intersect;
 import jva.libish.renderer;
-import jva.libish.intersect.point;
+import jva.libish.point;
 import jva.tiles.tile;
 
 import static com.raylib.Raylib.*;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
-    HashMap<String, tile> decorations = new HashMap<String, tile>();
+    HashMap<String, deco> decorations = new HashMap<String, deco>();
 
     public int width = 1;
     public int maxwidth = 9;
@@ -80,9 +81,17 @@ public class tilesys {
                 // .draw
 
                 if (tiles.containsKey(tls[i][j].id)) {
-                    shadow.draw(context, null, null, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
-                    tiles.get(tls[i][j].id).draw(context, decorations, tls[i][j], x, (int) (y + step));
-                    tiles.get(tls[i][j].id).update(context, tls[i][j], i, j, x, y);
+                    shadow.draw(x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
+                    tiles.get(tls[i][j].id).draw(x, (int) (y + step));
+                    tiles.get(tls[i][j].id).update(tls[i][j], i, j, x, y, size);
+
+                    //.draw decorations
+                    // tls[i][j].decorations.forEach(id -> 
+                    for (int k = 0; k < tls[i][j].decorations.size(); k++) {
+                        if (decorations.containsKey(tls[i][j].decorations.get(k))) {
+                            decorations.get(tls[i][j].decorations.get(k)).draw(decorations, tls[i][j], x, y, step);
+                        }
+                    }
                 } else{
                     System.out.println("Invalid tile id: '"+tls[i][j].id+"'");
                 }
@@ -90,6 +99,8 @@ public class tilesys {
                 // ?box colom.x
                 // debugdraw.quad(new point(x,y+step), new point(x+size,y+step), new
                 // point(x+size,y+size/2+step+size/32), new point(x,y+size/2+step+size/32));
+
+                //.intersection
 
                 point lf = new point(x, y + step + (size / 4));
                 point tp = new point(x + size / 2, y + step);
@@ -109,7 +120,7 @@ public class tilesys {
                 if ((intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY()))) ||
                         (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
                         (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY()))) && !iselect) {
-                    selectile.draw(context, null, null, x, y + step);
+                    selectile.draw(x, y + step);
                     iselect = true;
                     selection = new point(i, j);
                 }
@@ -121,16 +132,17 @@ public class tilesys {
     public void resize(renderer context, int s) {
         size = s;
         tiles.forEach((k, v) -> v.resize(context, s));
+        decorations.forEach((k, v) -> v.resize(context, s));
         shadow.resize(context, s);
         selectile.resize(context, s);
-
-        //stupid java with its stupid "final"
-        decorations.forEach((k, v) -> v.resize(context, s==0?32:s));
     }
 
-    //.register a tile
+    //.register a tile or deco
     public void regis(String name, tile inst) {
         tiles.put(name, inst);
+    }
+    public void regisdeco(String name, deco inst) {
+        decorations.put(name, inst);
     }
 
     //.increment width
@@ -162,23 +174,28 @@ public class tilesys {
         tls = newtls;
     }
 
+    //.save system
     public void save(savobj save) {
         // TODO: save
     }
-
     public savobj load() {
         // TODO: load
         return new savobj();
     }
 
+    //.tile operations
     public void set(int i, int j, String string) {
         tls[i][j].id = string;
     }
-
     public String at(point slct) {
         return tls[slct.x][slct.y].id;
     }
+    public void decorate(int i, int j, String string) {
+        if (!tls[i][j].decorations.contains(string))
+        tls[i][j].decorations.add(string);
+    }
 
+    //.classes
     public class tldata {
         public String id = "undisc";
 

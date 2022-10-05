@@ -4,6 +4,7 @@
 import static com.raylib.Raylib.*;
 
 import jva.tilesys;
+import jva.decorations.deco;
 import jva.libish.renderer;
 import jva.tiles.tile;
 
@@ -30,8 +31,12 @@ public class App {
                 //.init tiles
                 tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
                 tilemaj.regis("desert", new tile("src/resources/tiles/desert.png"));
+
+                //.init decorations
+                tilemaj.regisdeco("null_safty", new deco("src/resources/special/base.png"));
                 
                 tilemaj.set(1,1,"desert");
+                tilemaj.decorate(1,1,"null_safty");
             }
 
             @Override

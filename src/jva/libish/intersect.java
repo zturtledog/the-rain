@@ -18,14 +18,4 @@ public class intersect {
     public static double tri_area(point a, point b, point c) {
         return Math.abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
     }
-
-    public static class point {
-        public int x;
-        public int y;
-
-        public point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
 }
