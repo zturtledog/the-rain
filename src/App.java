@@ -3,9 +3,9 @@
 
 import static com.raylib.Raylib.*;
 
-import actial.renderer;
-import actial.tilesys;
-import tiles.tile;
+import jva.tilesys;
+import jva.libish.renderer;
+import jva.tiles.tile;
 
 import static com.raylib.Jaylib.Color;
 
@@ -31,8 +31,6 @@ public class App {
                 tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
                 
                 // tilemaj.set(1,1,"dirt");
-
-                tilemaj.incwidth(this);
             }
 
             @Override

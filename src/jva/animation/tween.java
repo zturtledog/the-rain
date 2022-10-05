@@ -1,4 +1,4 @@
-package animation;
+package jva.animation;
 
 public class tween {
     float max;

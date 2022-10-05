@@ -1,4 +1,4 @@
-package actial;
+package jva.libish;
 
 public class intersect {
     public static boolean triangle(point a, point b, point c, point p) {
@@ -23,7 +23,7 @@ public class intersect {
         public int x;
         public int y;
 
-        point(int x, int y) {
+        public point(int x, int y) {
             this.x = x;
             this.y = y;
         }

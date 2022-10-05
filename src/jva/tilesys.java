@@ -1,12 +1,14 @@
-package actial;
+package jva;
 
 import java.util.HashMap;
 
-import animation.tween;
-import actial.intersect.point;
-import static com.raylib.Raylib.*;
+import jva.animation.tween;
+import jva.libish.intersect;
+import jva.libish.renderer;
+import jva.libish.intersect.point;
+import jva.tiles.tile;
 
-import tiles.tile;
+import static com.raylib.Raylib.*;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
@@ -77,10 +79,9 @@ public class tilesys {
                 try {
                     shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
                     tiles.get(tls[i][j].id).draw(context, x, (int) (y + step));
-                    tiles.get(tls[i][j].id).update(context, i, j);
+                    tiles.get(tls[i][j].id).update(context, tls[i][j], i, j, x, y);
                 } catch (Exception e) {
                     System.out.println("Invalid tile id");
-                    System.exit(0);
                 }
 
                 // ?box colom.x

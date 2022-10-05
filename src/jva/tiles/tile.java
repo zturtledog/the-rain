@@ -1,8 +1,9 @@
-package tiles;
+package jva.tiles;
 import com.raylib.Raylib.Image;
 import com.raylib.Raylib.Texture;
 
-import actial.renderer;
+import jva.libish.renderer;
+import jva.tilesys.tldata;
 
 import static com.raylib.Raylib.*;
 import static com.raylib.Jaylib.Color;
@@ -35,5 +36,5 @@ public class tile {
     public void draw(renderer context, int x, int y) {
         DrawTexture(texture, x, y, new Color(255,255,255,255)); 
     }
-    public void update(renderer context, int i, int j) {}
+    public void update(renderer context, tldata data, int i, int j, int x, int y) {}
 }

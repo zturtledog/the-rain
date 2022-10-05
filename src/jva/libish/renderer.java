@@ -1,4 +1,4 @@
-package actial;
+package jva.libish;
 import static com.raylib.Raylib.*;
 
 public class renderer {

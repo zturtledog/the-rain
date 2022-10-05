@@ -1,8 +1,9 @@
-package actial;
-
-import actial.intersect.point;
+package jva.libish;
 
 import static com.raylib.Raylib.*;
+
+import jva.libish.intersect.point;
+
 import static com.raylib.Jaylib.Color;
 
 
