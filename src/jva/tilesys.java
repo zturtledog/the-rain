@@ -89,7 +89,7 @@ public class tilesys {
                     // tls[i][j].decorations.forEach(id -> 
                     for (int k = 0; k < tls[i][j].decorations.size(); k++) {
                         if (decorations.containsKey(tls[i][j].decorations.get(k))) {
-                            decorations.get(tls[i][j].decorations.get(k)).draw(decorations, tls[i][j], x, y, step);
+                            decorations.get(tls[i][j].decorations.get(k)).draw(decorations, tls[i][j], x, y + step - size/2 + size/32, size);
                         }
                     }
                 } else{
