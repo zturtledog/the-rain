@@ -1,5 +1,6 @@
 package jva;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import jva.animation.tween;
@@ -12,6 +13,8 @@ import static com.raylib.Raylib.*;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
+    HashMap<String, tile> decorations = new HashMap<String, tile>();
+
     public int width = 1;
     public int maxwidth = 9;
     public int minwidth = 3;
@@ -77,8 +80,8 @@ public class tilesys {
                 // .draw
 
                 if (tiles.containsKey(tls[i][j].id)) {
-                    shadow.draw(context, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
-                    tiles.get(tls[i][j].id).draw(context, x, (int) (y + step));
+                    shadow.draw(context, null, null, x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
+                    tiles.get(tls[i][j].id).draw(context, decorations, tls[i][j], x, (int) (y + step));
                     tiles.get(tls[i][j].id).update(context, tls[i][j], i, j, x, y);
                 } else{
                     System.out.println("Invalid tile id: '"+tls[i][j].id+"'");
@@ -106,7 +109,7 @@ public class tilesys {
                 if ((intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY()))) ||
                         (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
                         (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY()))) && !iselect) {
-                    selectile.draw(context, x, y + step);
+                    selectile.draw(context, null, null, x, y + step);
                     iselect = true;
                     selection = new point(i, j);
                 }
@@ -120,6 +123,9 @@ public class tilesys {
         tiles.forEach((k, v) -> v.resize(context, s));
         shadow.resize(context, s);
         selectile.resize(context, s);
+
+        //stupid java with its stupid "final"
+        decorations.forEach((k, v) -> v.resize(context, s==0?32:s));
     }
 
     //.register a tile
@@ -175,5 +181,9 @@ public class tilesys {
 
     public class tldata {
         public String id = "undisc";
+
+        public ArrayList<String> decorations = new ArrayList<String>();
+
+        public savobj nxt = new savobj();
     }
 }

@@ -14,8 +14,6 @@ public class tween {
     }
 
     public float step() {
-        
-
         if (pval>max) {pval=max;dir = -1;}
         if (pval<min) {pval=min;dir = 1;}
 
