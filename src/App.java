@@ -25,6 +25,8 @@ public class App {
 
                 tilemaj = new tilesys();
 
+                tilemaj.init();
+
                 //.init tiles
                 tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
                 tilemaj.regis("air", new tile("src/resources/special/base.png"));
@@ -45,6 +47,8 @@ public class App {
 
                 //tules
 
+                //@note this may be overwriten when given a value that results in a -0 scenerio
+                //fixed tilemap boundry scaling and division by zero
                 int ss = (int)off/tilemaj.width;
                 ss-=ss%32;
                 tilemaj.resize(this, ss==0?32:ss);
