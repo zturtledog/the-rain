@@ -33,10 +33,10 @@ public class App {
                 tilemaj.regis("desert", new tile("src/resources/tiles/desert.png"));
 
                 //.init decorations
-                tilemaj.regisdeco("null_safty", new deco("src/resources/special/base.png"));
+                tilemaj.regisdeco("cactus", new deco("src/resources/decorations/cactus.png"));
                 
                 tilemaj.set(1,1,"desert");
-                tilemaj.decorate(1,1,"null_safty");
+                tilemaj.decorate(1,1,"cactus");
             }
 
             @Override

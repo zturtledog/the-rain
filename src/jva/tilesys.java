@@ -21,23 +21,22 @@ public class tilesys {
     public int minwidth = 3;
     private int size;
 
-    //.grid
+    // .grid
     public tldata[][] tls = new tldata[width + 1][width + 1];
 
-    //#convenient, but unnesisary 
+    // #convenient, but unnesisary
     private tween bob = new tween(102, -102);
     private tile shadow;
     private tile selectile;
 
-    //.selection interface
+    // .selection interface
     public point selection = new point(0, 0);
     public boolean iselect = false;
-    
 
-    //.init
+    // .init
     public tilesys init() {
         shadow = new tile("src/resources/special/shadow.png");
-        selectile = new tile("src/resources/special/base.png");
+        selectile = new tile("src/resources/tiles/base.png");
 
         if (width < minwidth) {
             width = minwidth;
@@ -84,23 +83,15 @@ public class tilesys {
                     shadow.draw(x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
                     tiles.get(tls[i][j].id).draw(x, (int) (y + step));
                     tiles.get(tls[i][j].id).update(tls[i][j], i, j, x, y, size);
-
-                    //.draw decorations
-                    // tls[i][j].decorations.forEach(id -> 
-                    for (int k = 0; k < tls[i][j].decorations.size(); k++) {
-                        if (decorations.containsKey(tls[i][j].decorations.get(k))) {
-                            decorations.get(tls[i][j].decorations.get(k)).draw(decorations, tls[i][j], x, y + step - size/2 + size/32, size);
-                        }
-                    }
-                } else{
-                    System.out.println("Invalid tile id: '"+tls[i][j].id+"'");
+                } else {
+                    System.out.println("Invalid tile id: '" + tls[i][j].id + "'");
                 }
 
                 // ?box colom.x
                 // debugdraw.quad(new point(x,y+step), new point(x+size,y+step), new
                 // point(x+size,y+size/2+step+size/32), new point(x,y+size/2+step+size/32));
 
-                //.intersection
+                // .intersection
 
                 point lf = new point(x, y + step + (size / 4));
                 point tp = new point(x + size / 2, y + step);
@@ -113,22 +104,34 @@ public class tilesys {
                 // debug
                 // debugdraw.quad(lf, tp, rt, bt);
                 // if (i + 1 >= width)
-                //     debugdraw.quad(lf, bt, bbt, blf);
+                // debugdraw.quad(lf, bt, bbt, blf);
                 // if (j + 1 >= width)
-                //     debugdraw.quad(rt, bt, bbt, brt);
+                // debugdraw.quad(rt, bt, bbt, brt);
 
                 if ((intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY()))) ||
                         (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
-                        (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY()))) && !iselect) {
+                        (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY())))
+                                && !iselect) {
                     selectile.draw(x, y + step);
                     iselect = true;
                     selection = new point(i, j);
+                }
+
+                // .decorate
+                for (int k = 0; k < tls[i][j].decorations.size(); k++) {
+                    if (decorations.containsKey(tls[i][j].decorations.get(k))) {
+                        decorations.get(tls[i][j].decorations.get(k)).draw(x, y + step - size / 2 + size / 32);
+                        decorations.get(tls[i][j].decorations.get(k)).update(tls[i][j], i, i, x,
+                                y + step - size / 2 + size / 32, size);
+                    } else {
+                        System.out.println("Invalid decoration id id: '" + tls[i][j].decorations.get(k) + "'");
+                    }
                 }
             }
         }
     }
 
-    //.resize all textures
+    // .resize all textures
     public void resize(renderer context, int s) {
         size = s;
         tiles.forEach((k, v) -> v.resize(context, s));
@@ -137,15 +140,16 @@ public class tilesys {
         selectile.resize(context, s);
     }
 
-    //.register a tile or deco
+    // .register a tile or deco
     public void regis(String name, tile inst) {
         tiles.put(name, inst);
     }
+
     public void regisdeco(String name, deco inst) {
         decorations.put(name, inst);
     }
 
-    //.increment width
+    // .increment width
     public void incwidth(renderer context) {
         context.resized();
 
@@ -174,28 +178,31 @@ public class tilesys {
         tls = newtls;
     }
 
-    //.save system
+    // .save system
     public void save(savobj save) {
         // TODO: save
     }
+
     public savobj load() {
         // TODO: load
         return new savobj();
     }
 
-    //.tile operations
+    // .tile operations
     public void set(int i, int j, String string) {
         tls[i][j].id = string;
     }
+
     public String at(point slct) {
         return tls[slct.x][slct.y].id;
     }
+
     public void decorate(int i, int j, String string) {
         if (!tls[i][j].decorations.contains(string))
-        tls[i][j].decorations.add(string);
+            tls[i][j].decorations.add(string);
     }
 
-    //.classes
+    // .classes
     public class tldata {
         public String id = "undisc";
 

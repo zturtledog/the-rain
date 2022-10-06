@@ -8,8 +8,6 @@ import jva.tilesys.tldata;
 
 import static com.raylib.Raylib.*;
 
-import java.util.HashMap;
-
 import static com.raylib.Jaylib.Color;
 
 
@@ -38,11 +36,9 @@ public class deco {
         texture = LoadTextureFromImage(nimg); 
     }
 
-    public void draw(HashMap<String,deco> decor, tldata data, int x, int y, int s) {
-        // if (data != null) {
-        //     data.decorations.forEach(id -> decor.get(id).draw(context, null, null, x, y-s/2+s/32, 0));
-        // }
-
+    public void draw(int x, int y) {
         DrawTexture(texture, x, y, new Color(255,255,255,255)); 
     }
+
+    public void update(tldata data, int i, int j, int x, int y, int s) {}
 }
