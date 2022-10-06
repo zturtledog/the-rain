@@ -1,6 +1,5 @@
 package jva;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import jva.animation.tween;
@@ -118,14 +117,12 @@ public class tilesys {
                 }
 
                 // .decorate
-                for (int k = 0; k < tls[i][j].decorations.size(); k++) {
-                    if (decorations.containsKey(tls[i][j].decorations.get(k))) {
-                        decorations.get(tls[i][j].decorations.get(k)).draw(x, y + step - size / 2 + size / 32);
-                        decorations.get(tls[i][j].decorations.get(k)).update(tls[i][j], i, i, x,
-                                y + step - size / 2 + size / 32, size);
-                    } else {
-                        System.out.println("Invalid decoration id id: '" + tls[i][j].decorations.get(k) + "'");
-                    }
+                if (decorations.containsKey(tls[i][j].decorations)) {
+                    decorations.get(tls[i][j].decorations).draw(x, y + step - size / 2 + size / 32);
+                    decorations.get(tls[i][j].decorations).update(tls[i][j], i, i, x,
+                            y + step - size / 2 + size / 32, size);
+                } else {
+                    System.out.println("Invalid decoration id: '" + tls[i][j].decorations + "'");
                 }
             }
         }
@@ -199,14 +196,14 @@ public class tilesys {
 
     public void decorate(int i, int j, String string) {
         if (!tls[i][j].decorations.contains(string))
-            tls[i][j].decorations.add(string);
+            tls[i][j].decorations = string;
     }
 
     // .classes
     public class tldata {
         public String id = "undisc";
 
-        public ArrayList<String> decorations = new ArrayList<String>();
+        public String decorations = "undisc";
 
         public savobj nxt = new savobj();
     }

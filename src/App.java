@@ -33,6 +33,7 @@ public class App {
                 tilemaj.regis("desert", new tile("src/resources/tiles/desert.png"));
 
                 //.init decorations
+                tilemaj.regisdeco("undisc", new deco("src/resources/decorations/undisc.png"));
                 tilemaj.regisdeco("cactus", new deco("src/resources/decorations/cactus.png"));
                 
                 tilemaj.set(1,1,"desert");
