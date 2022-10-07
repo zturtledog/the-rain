@@ -1,6 +1,6 @@
 package jva.tiles;
 
-import jva.libish.renderer;
+import jva.libish.nxt;
 import jva.tilesys.tldata;
 
 public class tile {
@@ -9,7 +9,7 @@ public class tile {
     public tile() {
     }
 
-    public void resize(renderer context, int s) {
+    public void resize(nxt world, int s) {
     }
 
     public void draw(int x, int y) {

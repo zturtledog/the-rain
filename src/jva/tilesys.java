@@ -3,7 +3,9 @@ package jva;
 import java.util.HashMap;
 
 import jva.animation.tween;
+import jva.libish.debugdraw;
 import jva.libish.intersect;
+import jva.libish.nxt;
 import jva.libish.renderer;
 import jva.libish.point;
 import jva.tiles.default_tile;
@@ -16,7 +18,7 @@ public class tilesys {
     HashMap<String, tile> decorations = new HashMap<String, tile>();
 
     public int width = 3;
-    public int maxwidth = 9;
+    public int maxwidth = 7;
     public int minwidth = 3;
     private int size;
 
@@ -51,7 +53,8 @@ public class tilesys {
     }
 
     // int tmer = 0;
-    public void draw(renderer context) {
+    public void draw(renderer context, nxt world) {
+        // .assurances
         if (width < minwidth) {
             width = minwidth;
         }
@@ -64,6 +67,8 @@ public class tilesys {
         // System.out.println(tmer);
 
         iselect = false;
+
+        boolean cundisc = false;
 
         int step = (((int) bob.step()) / 12) - 12;
 
@@ -79,6 +84,10 @@ public class tilesys {
                 // .draw
 
                 if (tiles.containsKey(tls[i][j].id)) {
+                    if (tls[i][j].id == "undisc") {
+                        cundisc = true;
+                    }
+
                     shadow.draw(x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
                     tiles.get(tls[i][j].id).draw(x, (int) (y + step));
                     tiles.get(tls[i][j].id).update(tls[i][j], i, j, x, y, size);
@@ -101,11 +110,13 @@ public class tilesys {
                 point blf = new point(x, y + step + (size / 4) + (size / 2));
 
                 // debug
-                // debugdraw.quad(lf, tp, rt, bt);
-                // if (i + 1 >= width)
-                // debugdraw.quad(lf, bt, bbt, blf);
-                // if (j + 1 >= width)
-                // debugdraw.quad(rt, bt, bbt, brt);
+                if (nxt.getbool("debuglines")) {
+                    debugdraw.quad(lf, tp, rt, bt);
+                    if (i + 1 >= width)
+                        debugdraw.quad(lf, bt, bbt, blf);
+                    if (j + 1 >= width)
+                        debugdraw.quad(rt, bt, bbt, brt);
+                }
 
                 if ((intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY()))) ||
                         (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
@@ -126,15 +137,20 @@ public class tilesys {
                 }
             }
         }
+
+        // .dynamicaly increse width
+        if (!cundisc) {
+            incwidth(context, world);
+        }
     }
 
     // .resize all textures
-    public void resize(renderer context, int s) {
+    public void resize(nxt world, int s) {
         size = s;
-        tiles.forEach((k, v) -> v.resize(context, s));
-        decorations.forEach((k, v) -> v.resize(context, s));
-        shadow.resize(context, s);
-        selectile.resize(context, s);
+        tiles.forEach((k, v) -> v.resize(world, s));
+        decorations.forEach((k, v) -> v.resize(world, s));
+        shadow.resize(world, s);
+        selectile.resize(world, s);
     }
 
     // .register a tile or deco
@@ -148,9 +164,7 @@ public class tilesys {
     }
 
     // .increment width
-    public void incwidth(renderer context) {
-        context.resized();
-
+    public void incwidth(renderer context, nxt world) {
         width += 2;
         if (width > maxwidth) {
             width = maxwidth;
@@ -174,19 +188,21 @@ public class tilesys {
         }
 
         tls = newtls;
+
+        context.resized();
     }
 
     // .save system
-    public void save(savobj save) {
+    public void save(nxt save) {
         // TODO: save
     }
 
-    public savobj load() {
+    public nxt load() {
         // TODO: load
-        return new savobj();
+        return new nxt();
     }
 
-    //.
+    // .
     public tile tilebyid(String id) {
         return tiles.get(id);
     }
@@ -215,6 +231,6 @@ public class tilesys {
 
         public String decorations = "undisc";
 
-        public savobj nxt = new savobj();
+        public nxt anxt = new nxt();
     }
 }

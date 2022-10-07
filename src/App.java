@@ -4,6 +4,7 @@
 import static com.raylib.Raylib.*;
 
 import jva.tilesys;
+import jva.libish.nxt;
 import jva.libish.renderer;
 import jva.tiles.default_tile;
 
@@ -18,6 +19,9 @@ public class App {
         new renderer(400, 400, "May The Garden Ever Grow", "src/resources/special/dirt.png") {
             //tile varibles
             tilesys tilemaj;
+
+            //world
+            public nxt world;
             
             @Override
             public void init() {
@@ -27,18 +31,23 @@ public class App {
 
                 tilemaj.init();
 
+                world = new nxt();
+
                 //.init tiles
-                tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png"));
+                tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png")
+                    .decor("undisc"));
                 tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png")
+                    .decor("blank")
                     .decor("cactus")
                     .decor("cactus_0")
-                    // .decor("cactus_small_boulder")
+                    .decor("cactus_small_boulder")
                     .decor("cactus_small")
-                    // .decor("boulder")
+                    .decor("boulder")
                     );
 
                 //.init decorations
                 tilemaj.regisdeco("undisc", new default_tile("src/resources/decorations/undisc.png"));
+                tilemaj.regisdeco("blank", new default_tile("src/resources/decorations/blank.png"));
                 tilemaj.regisdeco("cactus", new default_tile("src/resources/decorations/cactus.png"));
                 tilemaj.regisdeco("cactus_0", new default_tile("src/resources/decorations/cactus1.png"));
                 tilemaj.regisdeco("cactus_small_boulder", new default_tile("src/resources/decorations/cactusmallboulder.png"));
@@ -53,8 +62,13 @@ public class App {
             public void draw() {
                 ClearBackground(new Color(35,35,45,255));
 
+                //debug
+                if (IsKeyPressed(KEY_ONE)) {
+                    nxt.setbool("debuglines", nxt.getbool("debuglines"));
+                }
+
                 //draw
-                tilemaj.draw(this);
+                tilemaj.draw(this, world);
 
                 //reveals
                 if (tilemaj.iselect && tilemaj.at(tilemaj.selection).id == "undisc") {
@@ -74,7 +88,7 @@ public class App {
                 //fixed tilemap boundry scaling and division by zero
                 int ss = (int)off/tilemaj.width;
                 ss-=ss%32;
-                tilemaj.resize(this, ss==0?32:ss);
+                tilemaj.resize(world, ss==0?32:ss);
             }
             
             public static int getoff() {

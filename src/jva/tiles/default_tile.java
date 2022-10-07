@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static com.raylib.Jaylib.Color;
 
-import jva.libish.renderer;
+import jva.libish.nxt;
 import jva.tilesys.tldata;
 
 public class default_tile extends tile {
@@ -27,7 +27,7 @@ public class default_tile extends tile {
     }
 
     @Override
-    public void resize(renderer context, int s) {
+    public void resize(nxt world, int s) {
         System.out.println("xpanse");
 
         nimg = img;
