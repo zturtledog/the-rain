@@ -4,9 +4,8 @@
 import static com.raylib.Raylib.*;
 
 import jva.tilesys;
-import jva.decorations.deco;
 import jva.libish.renderer;
-import jva.tiles.tile;
+import jva.tiles.default_tile;
 
 import static com.raylib.Jaylib.Color;
 
@@ -29,14 +28,14 @@ public class App {
                 tilemaj.init();
 
                 //.init tiles
-                tilemaj.regis("undisc", new tile("src/resources/tiles/undiscovererd.png"));
-                tilemaj.regis("desert", new tile("src/resources/tiles/desert.png"));
+                tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png"));
+                tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png"));
 
                 //.init decorations
-                tilemaj.regisdeco("undisc", new deco("src/resources/decorations/undisc.png"));
-                tilemaj.regisdeco("cactus", new deco("src/resources/decorations/cactus.png"));
+                tilemaj.regisdeco("undisc", new default_tile("src/resources/decorations/undisc.png"));
+                tilemaj.regisdeco("cactus", new default_tile("src/resources/decorations/cactus.png"));
                 
-                tilemaj.set(1,1,"desert");
+                tilemaj.setid(1,1,"desert");
                 tilemaj.decorate(1,1,"cactus");
             }
 
@@ -48,8 +47,10 @@ public class App {
                 tilemaj.draw(this);
 
                 //reveals
-                if (tilemaj.iselect && tilemaj.at(tilemaj.selection) == "undisc") {
-                    // tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, "desert");
+                if (tilemaj.iselect && tilemaj.at(tilemaj.selection).id == "undisc") {
+                    if (IsMouseButtonPressed(0)) {
+                        tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, (tilemaj.tilebyid("desert")).generate());
+                    }
                 }
             }
 
@@ -67,10 +68,7 @@ public class App {
             }
             
             public static int getoff() {
-                if (width() <= height()) {
-                    return width();
-                }
-                return height();
+                return ((width() <= height())?width():height());
             }
         };
     }

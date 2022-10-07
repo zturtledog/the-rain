@@ -3,19 +3,19 @@ package jva;
 import java.util.HashMap;
 
 import jva.animation.tween;
-import jva.decorations.deco;
 import jva.libish.intersect;
 import jva.libish.renderer;
 import jva.libish.point;
+import jva.tiles.default_tile;
 import jva.tiles.tile;
 
 import static com.raylib.Raylib.*;
 
 public class tilesys {
     HashMap<String, tile> tiles = new HashMap<String, tile>();
-    HashMap<String, deco> decorations = new HashMap<String, deco>();
+    HashMap<String, tile> decorations = new HashMap<String, tile>();
 
-    public int width = 1;
+    public int width = 3;
     public int maxwidth = 9;
     public int minwidth = 3;
     private int size;
@@ -34,8 +34,8 @@ public class tilesys {
 
     // .init
     public tilesys init() {
-        shadow = new tile("src/resources/special/shadow.png");
-        selectile = new tile("src/resources/tiles/base.png");
+        shadow = new default_tile("src/resources/special/shadow.png");
+        selectile = new default_tile("src/resources/tiles/base.png");
 
         if (width < minwidth) {
             width = minwidth;
@@ -139,10 +139,11 @@ public class tilesys {
 
     // .register a tile or deco
     public void regis(String name, tile inst) {
+        inst.id = name;
         tiles.put(name, inst);
     }
 
-    public void regisdeco(String name, deco inst) {
+    public void regisdeco(String name, tile inst) {
         decorations.put(name, inst);
     }
 
@@ -185,13 +186,22 @@ public class tilesys {
         return new savobj();
     }
 
-    // .tile operations
-    public void set(int i, int j, String string) {
-        tls[i][j].id = string;
+    //.
+    public tile tilebyid(String id) {
+        return tiles.get(id);
     }
 
-    public String at(point slct) {
-        return tls[slct.x][slct.y].id;
+    // .tile operations
+    public void set(int i, int j, tldata data) {
+        tls[i][j] = data;
+    }
+
+    public void setid(int i, int j, String id) {
+        tls[i][j].id = id;
+    }
+
+    public tldata at(point slct) {
+        return tls[slct.x][slct.y];
     }
 
     public void decorate(int i, int j, String string) {
@@ -200,7 +210,7 @@ public class tilesys {
     }
 
     // .classes
-    public class tldata {
+    public static class tldata {
         public String id = "undisc";
 
         public String decorations = "undisc";
