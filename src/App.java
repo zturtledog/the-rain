@@ -29,11 +29,21 @@ public class App {
 
                 //.init tiles
                 tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png"));
-                tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png"));
+                tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png")
+                    .decor("cactus")
+                    .decor("cactus_0")
+                    // .decor("cactus_small_boulder")
+                    .decor("cactus_small")
+                    // .decor("boulder")
+                    );
 
                 //.init decorations
                 tilemaj.regisdeco("undisc", new default_tile("src/resources/decorations/undisc.png"));
                 tilemaj.regisdeco("cactus", new default_tile("src/resources/decorations/cactus.png"));
+                tilemaj.regisdeco("cactus_0", new default_tile("src/resources/decorations/cactus1.png"));
+                tilemaj.regisdeco("cactus_small_boulder", new default_tile("src/resources/decorations/cactusmallboulder.png"));
+                tilemaj.regisdeco("cactus_small", new default_tile("src/resources/decorations/cactusmall.png"));
+                tilemaj.regisdeco("boulder", new default_tile("src/resources/decorations/boulder.png"));
                 
                 tilemaj.setid(1,1,"desert");
                 tilemaj.decorate(1,1,"cactus");
