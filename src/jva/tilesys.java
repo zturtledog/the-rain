@@ -70,7 +70,7 @@ public class tilesys {
 
         boolean cundisc = false;
 
-        int step = (((int) bob.step()) / 12) - 12;
+        int step = (world.getbool("bounce"))?((((int) bob.step()) / 12) - 12):(1/12-12);
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
@@ -110,7 +110,7 @@ public class tilesys {
                 point blf = new point(x, y + step + (size / 4) + (size / 2));
 
                 // debug
-                if (nxt.getbool("debuglines")) {
+                if (world.getbool("debuglines")) {
                     debugdraw.quad(lf, tp, rt, bt);
                     if (i + 1 >= width)
                         debugdraw.quad(lf, bt, bbt, blf);

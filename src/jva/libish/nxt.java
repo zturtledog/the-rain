@@ -3,12 +3,16 @@ package jva.libish;
 import java.util.HashMap;
 
 public class nxt {
-    HashMap<String, Object> lst = new HashMap<String, Object>();
+    HashMap<String, Object> lsta = new HashMap<String, Object>();
 
-    public static boolean getbool(String string) {
-        return false;
+    public boolean getbool(String name) {
+        if (lsta.containsKey(name))
+            return (boolean) (lsta.get(name));
+        else
+            return false;
     }
 
-    public static void setbool(String string, boolean getbool) {
+    public void setbool(String name, boolean value) {
+        lsta.put(name, value);
     }
 }

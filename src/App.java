@@ -42,20 +42,34 @@ public class App {
                     .decor("cactus_0")
                     .decor("cactus_small_boulder")
                     .decor("cactus_small")
-                    .decor("boulder")
-                    );
+                    .decor("boulder"));
+                tilemaj.regis("water", new default_tile("src/resources/tiles/water.png")
+                    .decor("lilipad")
+                    .decor("lilipad_0")
+                    .decor("blank")
+                    .decor("blank")
+                    .decor("blank"));
 
                 //.init decorations
                 tilemaj.regisdeco("undisc", new default_tile("src/resources/decorations/undisc.png"));
                 tilemaj.regisdeco("blank", new default_tile("src/resources/decorations/blank.png"));
+
                 tilemaj.regisdeco("cactus", new default_tile("src/resources/decorations/cactus.png"));
                 tilemaj.regisdeco("cactus_0", new default_tile("src/resources/decorations/cactus1.png"));
                 tilemaj.regisdeco("cactus_small_boulder", new default_tile("src/resources/decorations/cactusmallboulder.png"));
                 tilemaj.regisdeco("cactus_small", new default_tile("src/resources/decorations/cactusmall.png"));
                 tilemaj.regisdeco("boulder", new default_tile("src/resources/decorations/boulder.png"));
+
+                tilemaj.regisdeco("lilipad", new default_tile("src/resources/decorations/lilipad.png"));
+                tilemaj.regisdeco("lilipad_0", new default_tile("src/resources/decorations/lilipad1.png"));
+                tilemaj.regisdeco("cattails", new default_tile("src/resources/decorations/cattails.png"));
                 
                 tilemaj.setid(1,1,"desert");
                 tilemaj.decorate(1,1,"cactus");
+
+
+                //.init debug
+                world.setbool("bounce", true);
             }
 
             @Override
@@ -64,7 +78,10 @@ public class App {
 
                 //debug
                 if (IsKeyPressed(KEY_ONE)) {
-                    nxt.setbool("debuglines", nxt.getbool("debuglines"));
+                    world.setbool("debuglines", !world.getbool("debuglines"));
+                }
+                if (IsKeyPressed(KEY_TWO)) {
+                    world.setbool("bounce", !world.getbool("bounce"));
                 }
 
                 //draw
@@ -73,7 +90,7 @@ public class App {
                 //reveals
                 if (tilemaj.iselect && tilemaj.at(tilemaj.selection).id == "undisc") {
                     if (IsMouseButtonPressed(0)) {
-                        tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, (tilemaj.tilebyid("desert")).generate());
+                        tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, (tilemaj.tilebyid("water")).generate());
                     }
                 }
             }
