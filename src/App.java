@@ -4,6 +4,7 @@
 import static com.raylib.Raylib.*;
 
 import jva.tilesys;
+import jva.weather;
 import jva.libish.nxt;
 import jva.libish.renderer;
 import jva.tiles.default_tile;
@@ -22,6 +23,8 @@ public class App {
 
             //world
             public nxt world;
+
+            private weather wther;
             
             @Override
             public void init() {
@@ -63,13 +66,20 @@ public class App {
                 tilemaj.regisdeco("lilipad", new default_tile("src/resources/decorations/lilipad.png"));
                 tilemaj.regisdeco("lilipad_0", new default_tile("src/resources/decorations/lilipad1.png"));
                 tilemaj.regisdeco("cattails", new default_tile("src/resources/decorations/cattails.png"));
-                
-                tilemaj.setid(1,1,"desert");
-                tilemaj.decorate(1,1,"cactus");
-
 
                 //.init debug
                 world.setbool("bounce", true);
+
+                //.init weather
+                wther = new weather();
+
+                wther.regis("rain",new default_tile("src/resources/special/null_safty.png.png"));
+
+                //.test
+                tilemaj.setid(1,1,"desert");
+                tilemaj.decorate(1,1,"cactus");
+
+                wther.state = "rain";
             }
 
             @Override
@@ -86,6 +96,7 @@ public class App {
 
                 //draw
                 tilemaj.draw(this, world);
+                wther.draw(world);
 
                 //reveals
                 if (tilemaj.iselect && tilemaj.at(tilemaj.selection).id == "undisc") {
@@ -106,6 +117,7 @@ public class App {
                 int ss = (int)off/tilemaj.width;
                 ss-=ss%32;
                 tilemaj.resize(world, ss==0?32:ss);
+                wther.resize(world, ss==0?32:ss);
             }
             
             public static int getoff() {

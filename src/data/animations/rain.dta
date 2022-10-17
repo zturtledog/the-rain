@@ -1,0 +1,159 @@
+._FRAMELENGTH = 50
+._FILEPATH = src/resources/anim/rain/rain
+
+length:31
+
+:0
+    src:_FILEPATH_0.png
+    duration:._FRAMELENGTH
+:end
+
+:1
+    src:_FILEPATH_1.png
+    duration:._FRAMELENGTH
+:end
+
+:2
+    src:_FILEPATH_2.png
+    duration:._FRAMELENGTH
+:end
+
+:3
+    src:_FILEPATH_3.png
+    duration:._FRAMELENGTH
+:end
+
+:4
+    src:_FILEPATH_4.png
+    duration:._FRAMELENGTH
+:end
+
+:5
+    src:_FILEPATH_5.png
+    duration:._FRAMELENGTH
+:end
+
+:6
+    src:_FILEPATH_6.png
+    duration:._FRAMELENGTH
+:end
+
+:7
+    src:_FILEPATH_7.png
+    duration:._FRAMELENGTH
+:end
+
+:8
+    src:_FILEPATH_8.png
+    duration:._FRAMELENGTH
+:end
+
+:9
+    src:_FILEPATH_9.png
+    duration:._FRAMELENGTH
+:end
+
+:10
+    src:_FILEPATH_10.png
+    duration:._FRAMELENGTH
+:end
+
+:11
+    src:_FILEPATH_11.png
+    duration:._FRAMELENGTH
+:end
+
+:12
+    src:_FILEPATH_12.png
+    duration:._FRAMELENGTH
+:end
+
+:13
+    src:_FILEPATH_13.png
+    duration:._FRAMELENGTH
+:end
+
+:14
+    src:_FILEPATH_14.png
+    duration:._FRAMELENGTH
+:end
+
+:15
+    src:_FILEPATH_15.png
+    duration:._FRAMELENGTH
+:end
+
+:16
+    src:_FILEPATH_16.png
+    duration:._FRAMELENGTH
+:end
+
+:17
+    src:_FILEPATH_17.png
+    duration:._FRAMELENGTH
+:end
+
+:18
+    src:_FILEPATH_18.png
+    duration:._FRAMELENGTH
+:end
+
+:19
+    src:_FILEPATH_19.png
+    duration:._FRAMELENGTH
+:end
+
+:20
+    src:_FILEPATH_20.png
+    duration:._FRAMELENGTH
+:end
+
+:21
+    src:_FILEPATH_21.png
+    duration:._FRAMELENGTH
+:end
+
+:22
+    src:_FILEPATH_22.png
+    duration:._FRAMELENGTH
+:end
+
+:23
+    src:_FILEPATH_23.png
+    duration:._FRAMELENGTH
+:end
+
+:24
+    src:_FILEPATH_24.png
+    duration:._FRAMELENGTH
+:end
+
+:25
+    src:_FILEPATH_25.png
+    duration:._FRAMELENGTH
+:end
+
+:26
+    src:_FILEPATH_26.png
+    duration:._FRAMELENGTH
+:end
+
+:27
+    src:_FILEPATH_27.png
+    duration:._FRAMELENGTH
+:end
+
+:28
+    src:_FILEPATH_28.png
+    duration:._FRAMELENGTH
+:end
+
+:29
+    src:_FILEPATH_29.png
+    duration:._FRAMELENGTH
+:end
+
+:30
+    src:_FILEPATH_30.png
+    duration:._FRAMELENGTH
+:end
