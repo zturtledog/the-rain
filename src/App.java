@@ -79,7 +79,7 @@ public class App {
                 tilemaj.setid(1,1,"desert");
                 tilemaj.decorate(1,1,"cactus");
 
-                wther.state = "rain";
+                wther.state = "none";
             }
 
             @Override

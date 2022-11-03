@@ -15,4 +15,15 @@ public class nxt {
     public void setbool(String name, boolean value) {
         lsta.put(name, value);
     }
+
+    public Object get(String name) {
+        if (lsta.containsKey(name))
+            return (lsta.get(name));
+        else
+            return null;
+    }
+
+    public void set(String name, Object value) {
+        lsta.put(name, value);
+    }
 }
