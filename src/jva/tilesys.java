@@ -138,6 +138,12 @@ public class tilesys {
             }
         }
 
+        if (iselect) {
+            if (IsMouseButtonPressed(0)) {
+                tiles.get(at(selection).id).activated(selection.x, selection.y, this, world);
+            }
+        }
+
         // .dynamicaly increse width
         if (!cundisc) {
             incwidth(context, world);

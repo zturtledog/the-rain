@@ -6,6 +6,7 @@ import static com.raylib.Raylib.*;
 import jva.tilesys;
 import jva.weather;
 import jva.libish.nxt;
+import jva.libish.point;
 import jva.libish.renderer;
 import jva.tiles.default_tile;
 
@@ -37,8 +38,11 @@ public class App {
                 world = new nxt();
 
                 //.init tiles
-                tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png")
-                    .decor("undisc"));
+                tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png") {
+                        @Override public void activated(int x, int y, tilesys tilesys, nxt world) {
+                            tilesys.set(x, y, tilesys.tilebyid("water").generate());//tilesys.at(new point(x, y)).id
+                        };
+                    }.decor("undisc"));
                 tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png")
                     .decor("blank")
                     .decor("cactus")
@@ -97,13 +101,6 @@ public class App {
                 //draw
                 tilemaj.draw(this, world);
                 wther.draw(world);
-
-                //reveals
-                if (tilemaj.iselect && tilemaj.at(tilemaj.selection).id == "undisc") {
-                    if (IsMouseButtonPressed(0)) {
-                        tilemaj.set(tilemaj.selection.x, tilemaj.selection.y, (tilemaj.tilebyid("water")).generate());
-                    }
-                }
             }
 
             @Override

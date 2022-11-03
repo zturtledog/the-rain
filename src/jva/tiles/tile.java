@@ -1,5 +1,6 @@
 package jva.tiles;
 
+import jva.tilesys;
 import jva.libish.nxt;
 import jva.tilesys.tldata;
 
@@ -22,5 +23,8 @@ public class tile {
         exp.id = id;
 
         return exp;
+    }
+
+    public void activated(int x, int y, tilesys tilesys, nxt world) {
     }
 }
