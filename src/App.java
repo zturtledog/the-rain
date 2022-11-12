@@ -9,6 +9,7 @@ import jva.libish.nxt;
 import jva.libish.point;
 import jva.libish.renderer;
 import jva.tiles.default_tile;
+import jva.tilesys.tldata;
 
 import static com.raylib.Jaylib.Color;
 
@@ -39,8 +40,8 @@ public class App {
 
                 //.init tiles
                 tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png") {
-                        @Override public void activated(int x, int y, tilesys tilesys, nxt world) {
-                            tilesys.set(x, y, tilesys.tilebyid("water").generate());//tilesys.at(new point(x, y)).id
+                        @Override public void activated(point slc, tilesys tilesys, nxt world, tldata data) {
+                            tilesys.set(slc.x, slc.y, tilesys.tilebyid("water").generate());//tilesys.at(new point(x, y)).id
                         };
                     }.decor("undisc"));
                 tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png")

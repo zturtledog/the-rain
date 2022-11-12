@@ -2,6 +2,7 @@ package jva.tiles;
 
 import jva.tilesys;
 import jva.libish.nxt;
+import jva.libish.point;
 import jva.tilesys.tldata;
 
 public class tile {
@@ -25,6 +26,6 @@ public class tile {
         return exp;
     }
 
-    public void activated(int x, int y, tilesys tilesys, nxt world) {
+    public void activated(point selection, tilesys tilesys, nxt world, tldata tldata) {
     }
 }
