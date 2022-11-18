@@ -89,8 +89,8 @@ public class tilesys {
                     }
 
                     shadow.draw(x, y + size / 8);// +(size/32*i*2) //+(size/32*2)*(j/2)
-                    tiles.get(tls[i][j].id).update(tls[i][j], i, j, x, y, size);
                     tiles.get(tls[i][j].id).draw(x, (int) (y + step));
+                    tiles.get(tls[i][j].id).update(tls[i][j], i, j, x, y, size);
                 } else {
                     System.out.println("Invalid tile id: '" + tls[i][j].id + "'");
                 }

@@ -34,6 +34,8 @@ public class App {
 
                 tilemaj = new tilesys();
 
+                tilemaj.maxwidth=100;
+
                 tilemaj.init();
 
                 world = new nxt();
@@ -41,9 +43,11 @@ public class App {
                 //.init tiles
                 tilemaj.regis("undisc", new default_tile("src/resources/tiles/undiscovererd.png") {
                         @Override public void activated(point slc, tilesys tilesys, nxt world, tldata data) {
-                            tilesys.set(slc.x, slc.y, tilesys.tilebyid("water").generate());//tilesys.at(new point(x, y)).id
+                            tilesys.set(slc.x, slc.y, tilesys.tilebyid("farmland").generate());//tilesys.at(new point(x, y)).id
                         };
                     }.decor("undisc"));
+                tilemaj.regis("farmland", new default_tile("src/resources/tiles/farmland.png")
+                    .decor("blank"));
                 tilemaj.regis("desert", new default_tile("src/resources/tiles/desert.png")
                     .decor("blank")
                     .decor("cactus")
@@ -75,21 +79,28 @@ public class App {
                 //.init debug
                 world.setbool("bounce", true);
 
+                //init world var
+                world.setbool("nvoidil", true);
+
                 //.init weather
                 wther = new weather();
 
                 wther.regis("rain",new default_tile("src/resources/special/null_safty.png.png"));
 
                 //.test
-                tilemaj.setid(1,1,"desert");
-                tilemaj.decorate(1,1,"cactus");
+                // tilemaj.setid(1,1,"desert");
+                // tilemaj.decorate(1,1,"cactus");
+                tilemaj.set(1, 1, tilemaj.tilebyid("desert").generate());
 
                 wther.state = "none";
             }
 
             @Override
             public void draw() {
-                ClearBackground(new Color(35,35,45,255));
+                if (world.getbool("nvoidil")){
+                ClearBackground(new Color(60,60,180,255));}//
+                if (!world.getbool("nvoidil")){
+                ClearBackground(new Color(35,35,45,255));}
 
                 //debug
                 if (IsKeyPressed(KEY_ONE)) {
@@ -97,6 +108,12 @@ public class App {
                 }
                 if (IsKeyPressed(KEY_TWO)) {
                     world.setbool("bounce", !world.getbool("bounce"));
+                }
+                if (IsKeyPressed(KEY_THREE)) {
+                    wther.state = wther.state!="rain"?"rain":"none";
+                }
+                if (IsKeyPressed(KEY_FOUR)) {
+                    world.setbool("nvoidil", !world.getbool("nvoidil"));
                 }
 
                 //draw
