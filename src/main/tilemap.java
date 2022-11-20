@@ -23,7 +23,7 @@ public class tilemap {
     public tldata[][] tls = new tldata[width + 1][width + 1];
 
     // .registry
-    public HashMap<String, sprite> states = new HashMap<String, sprite>();
+    public HashMap<String, state> states = new HashMap<String, state>();
     public HashMap<String, tile> tiles = new HashMap<String, tile>();
 
     // .sprites in use
@@ -111,13 +111,20 @@ public class tilemap {
             }
         }
 
+        if (iselect) {
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (tiles.containsKey(at(selection).id)) {
+                    tiles.get(at(selection).id).activated(this, world, at(selection), selection);
+                }
+            }
+        }
     }
 
     public void init(Iworld world) {
         shadow = new sprite("src/resources/special/shadow.png");
         select = new sprite("src/resources/tiles/base.png");
 
-        states = new HashMap<String, sprite>();
+        states = new HashMap<String, state>();
 
         tls = new tldata[width + 1][width + 1];
         for (int i = 0; i < width; i++) {
@@ -189,5 +196,15 @@ public class tilemap {
     public class tldata {
         public String state = "none";
         public String id = "";
+    }
+
+    public static class state extends sprite {
+        public state(String tex) {
+            super(tex);
+        }
+
+        public void update(tilemap map, Iworld world, tldata data, int i, int j) {
+            //
+        }
     }
 }

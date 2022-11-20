@@ -13,4 +13,9 @@ public class point {
         x = pnt.x;
         y = pnt.y;
     }
+
+    @Override
+    public String toString() {
+        return "point: x("+x+") y("+y+")";
+    }
 }

@@ -1,13 +1,13 @@
 import static com.raylib.Raylib.*;
 
-import java.util.function.Supplier;
-
 import main.Iworld;
 import main.sizemapinterface;
 import main.tilemap;
 import main.library.debugdraw;
+import main.library.point;
 import main.library.renderer;
-import main.library.sprite;
+import main.tilemap.state;
+import main.tilemap.tldata;
 import main.tiles.default_tile;
 
 import static com.raylib.Jaylib.Color;
@@ -23,9 +23,14 @@ public class App {
 
                 map.init(world);
 
-                map.states.put("none",new sprite("src/resources/tiles/undiscovererd.png"));
+                map.states.put("none",new state("src/resources/tiles/undiscovererd.png"));
 
-                map.tiles.put("test", new default_tile("src/resources/special/null_safty.png.png"));
+                map.tiles.put("test", new default_tile("src/resources/special/null_safty.png.png") {
+                    @Override
+                    public void activated(tilemap map, Iworld world, tldata data, point pos) {
+                        map.at(pos).id="etewt";
+                    }
+                });
 
                 map.at(1, 1).id = "test";
                 map.incwidth(this, world);
