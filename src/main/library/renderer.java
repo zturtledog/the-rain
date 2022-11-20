@@ -27,10 +27,15 @@ public class renderer {
 
             EndDrawing();
         }
+
+        unload();
+
         CloseWindow();
     }
 
     //overides
+
+    public void unload() {}
 
     public void resized() {}
 

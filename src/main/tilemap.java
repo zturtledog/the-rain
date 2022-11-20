@@ -1,4 +1,5 @@
 package main;
+
 import static com.raylib.Raylib.*;
 
 import java.util.HashMap;
@@ -22,15 +23,36 @@ public class tilemap {
     public tldata[][] tls = new tldata[width + 1][width + 1];
 
     // .registry
-    public HashMap<String,sprite> states = new HashMap<String,sprite>();
+    public HashMap<String, sprite> states = new HashMap<String, sprite>();
+    public HashMap<String, tile> tiles = new HashMap<String, tile>();
 
     // .sprites in use
     public sprite shadow;
     public sprite select;
 
+    // bounce anim
+    int step = 0;
+    float step_lerp = 0;
+    int step_dir = -1;
+    int step_height = 15;
+
     public void draw(Iworld world) {
-        //temporary
-        int step = (int) Math.round(Math.sin(world.time/10) < 0.5 ? 4 * Math.sin(world.time/10) * Math.sin(world.time/10) * Math.sin(world.time/10) : 1 - Math.pow(-2 * Math.sin(world.time/10) + 2, 3) / 2);
+        // temporary
+        step_height = size / 8 / 2;// -/20
+        if (world.debug_animate_bounce) {
+            if (step_lerp >= step_height) {
+                step_dir = -1;
+            } else if (step_lerp <= -step_dir) {
+                step_dir = 1;
+            }
+            step_lerp += ((float) step_dir) / 7;
+            step = (int) Math.round(step_lerp);
+        } else {
+            step = 0;
+        }
+        // System.out.println(step_lerp);
+
+        iselect = false;
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
@@ -43,12 +65,11 @@ public class tilemap {
 
                 // .draw
 
-                shadow.draw(x, y+size/8);
+                shadow.draw(x, y + size / 8);
                 if (states.containsKey(at(i, j).state)) {
-                    states.get(at(i, j).state).draw(x, y+step);
-                }
-                else {
-                    //TODO: error
+                    states.get(at(i, j).state).draw(x, y + step);
+                } else {
+                    // TODO: error
                 }
 
                 // .intersection
@@ -70,16 +91,23 @@ public class tilemap {
                         debugdraw.quad(rt, bt, bbt, brt);
                 }
 
-                if ((intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY()))) ||
-                        (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
-                        (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY())))
-                                && !iselect) {
-                    select.draw(x, y+step);
-                    iselect = true;
-                    selection = new point(i, j);
+                if (!iselect) {
+                    if (intersect.quad(lf, tp, rt, bt, new point(GetMouseX(), GetMouseY())) ||
+                            (j + 1 >= width && intersect.quad(rt, bt, bbt, brt, new point(GetMouseX(), GetMouseY()))) ||
+                            (i + 1 >= width && intersect.quad(lf, bt, bbt, blf, new point(GetMouseX(), GetMouseY())))) {
+                        select.draw(x, y + step);
+                        iselect = true;
+                        selection = new point(i, j);
+                    }
                 }
 
-                //TODO:tile update on tile deco
+                if (tiles.containsKey(at(i, j).id)) {
+                    tiles.get(at(i, j).id).draw(at(i, j), x, y + step - size / 2 + size / 32, size);
+
+                    if (world.scheduled_tick_is_now) {
+                        tiles.get(at(i, j).id).update(this, world, at(i, j), i, j);
+                    }
+                }
             }
         }
 
@@ -89,7 +117,7 @@ public class tilemap {
         shadow = new sprite("src/resources/special/shadow.png");
         select = new sprite("src/resources/tiles/base.png");
 
-        states = new HashMap<String,sprite>();
+        states = new HashMap<String, sprite>();
 
         tls = new tldata[width + 1][width + 1];
         for (int i = 0; i < width; i++) {
@@ -99,13 +127,20 @@ public class tilemap {
         }
     }
 
+    public void unload() {
+        states.forEach((k, v) -> v.unload());
+        tiles.forEach((k, v) -> v.unload());
+        shadow.unload();
+        select.unload();
+    }
+
     // .resize all textures
-    public void resize(Iworld world, int s) {
-        size = s;
-        states.forEach((k, v) -> v.resize(world, s));
-        // decorations.forEach((k, v) -> v.resize(world, s));
-        shadow.resize(world, s);
-        select.resize(world, s);
+    public void resize(Iworld world, sizemapinterface smp, int ss) {
+        size = (int) smp.map(ss,32);
+        states.forEach((k, v) -> v.resize(world, size));
+        tiles.forEach((k, v) -> v.resize(world, smp, ss));
+        shadow.resize(world, size);
+        select.resize(world, size);
     }
 
     public void incwidth(renderer context, Iworld world) {
@@ -151,7 +186,8 @@ public class tilemap {
         return tls[slct.x][slct.y];
     }
 
-    class tldata {
+    public class tldata {
         public String state = "none";
+        public String id = "";
     }
 }

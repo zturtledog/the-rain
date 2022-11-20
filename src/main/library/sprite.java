@@ -8,8 +8,10 @@ import static com.raylib.Raylib.LoadTextureFromImage;
 import com.raylib.Jaylib.Color;
 import com.raylib.Raylib.Image;
 import com.raylib.Raylib.Texture;
+import static com.raylib.Raylib.*;
 
 import main.Iworld;
+import main.sizemapinterface;
 
 public class sprite {
     Image img;
@@ -37,4 +39,20 @@ public class sprite {
     public void draw(int x, int y) {
         DrawTexture(texture, x, y, new Color(255, 255, 255, 255));
     }
+
+    public void unload() {
+        UnloadTexture(texture);
+    }
+
+    // public void resize(Iworld world, sizemapinterface smp, int ss) {
+    //     nimg = img;
+
+    //     int s = (int) smp.map(ss,img.width()>img.height()?img.width():img.height());
+
+    //     // no clue if this does anything
+    //     texture.close();
+
+    //     ImageResizeNN(nimg, s, s);
+    //     texture = LoadTextureFromImage(nimg);
+    // }
 }

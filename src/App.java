@@ -1,10 +1,14 @@
 import static com.raylib.Raylib.*;
 
+import java.util.function.Supplier;
+
 import main.Iworld;
+import main.sizemapinterface;
 import main.tilemap;
 import main.library.debugdraw;
 import main.library.renderer;
 import main.library.sprite;
+import main.tiles.default_tile;
 
 import static com.raylib.Jaylib.Color;
 
@@ -20,6 +24,11 @@ public class App {
                 map.init(world);
 
                 map.states.put("none",new sprite("src/resources/tiles/undiscovererd.png"));
+
+                map.tiles.put("test", new default_tile("src/resources/special/null_safty.png.png"));
+
+                map.at(1, 1).id = "test";
+                map.incwidth(this, world);
             }
             
             @Override
@@ -30,6 +39,8 @@ public class App {
                 map.draw(world);
                 
                 debugdraw.rect(0,0,80,height());
+
+                world.scheduled_tick_is_now = false;
             }
 
             @Override
@@ -42,8 +53,13 @@ public class App {
                 //@note this may be overwriten when given a value that results in a -0 scenerio
                 //fixed tilemap boundry scaling and division by zero
                 int ss = ((int)off/map.width);
-                ss-=ss%32;
-                map.resize(world, ss==0?32:ss);
+                sizemapinterface smp = (ssa,tr)->(ssa-ssa%tr)==0?tr:(ssa-ssa%tr);
+                map.resize(world, smp, ss);
+            }
+
+            @Override
+            public void unload() {
+                map.unload();
             }
         };
     }
