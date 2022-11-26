@@ -122,7 +122,7 @@ public class tilemap {
 
     public void init(Iworld world) {
         shadow = new sprite("src/resources/special/shadow.png");
-        select = new sprite("src/resources/tiles/base.png");
+        select = new sprite("src/resources/special/base-tile.png");
 
         states = new HashMap<String, state>();
 

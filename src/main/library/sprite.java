@@ -11,7 +11,6 @@ import com.raylib.Raylib.Texture;
 import static com.raylib.Raylib.*;
 
 import main.Iworld;
-import main.sizemapinterface;
 
 public class sprite {
     Image img;
@@ -42,6 +41,10 @@ public class sprite {
 
     public void unload() {
         UnloadTexture(texture);
+    }
+
+    public int size() {
+        return texture.width();
     }
 
     // public void resize(Iworld world, sizemapinterface smp, int ss) {
