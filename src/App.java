@@ -37,15 +37,6 @@ public class App {
                 map.at(1, 1).id = "test";
                 map.at(1, 1).state = "farmland";
 
-                map.at(0, 0).id = "test";
-                map.at(0, 0).state = "farmland";
-                map.at(0, 1).id = "test";
-                map.at(0, 1).state = "farmland";
-                map.at(1, 0).id = "test";
-                map.at(1, 0).state = "farmland";
-                map.at(1, 1).id = "test";
-                map.at(1, 1).state = "farmland";
-
                 map.incwidth(this, world);
             }
 
