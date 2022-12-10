@@ -34,6 +34,6 @@ public class debugdraw {
         DrawLine( x,  y,  x+w,  y, color);
         DrawLine( x+w,  y,  x+w, y+h, color);
         DrawLine( x+w,  y+h,  x,  h+y, color);
-        DrawLine( x,  y+y,  x,  y, color);
+        // DrawLine( x,  y+y,  x,  y, color);
     }
 }

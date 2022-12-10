@@ -16,6 +16,10 @@ public class point {
 
     @Override
     public String toString() {
-        return "point: x("+x+") y("+y+")";
+        return "point: x(" + x + ") y(" + y + ")";
+    }
+
+    public static point random(int i, int j) {
+        return new point(util.map(Math.random(), 0, 1, i, j), util.map(Math.random(), 0, 1, i, j));
     }
 }

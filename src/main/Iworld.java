@@ -1,6 +1,6 @@
 package main;
 public class Iworld {
-    public boolean debug_draw_lines = !false;
+    public boolean debug_draw_lines = !!false;
     public boolean debug_animate_bounce = true;
     
     public int time = 0;

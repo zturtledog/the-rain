@@ -1,7 +1,8 @@
 index
     :{
         0:#009034 
-        1:#434336
+        1:#43f336
+        length:2
 }
 
 settings
@@ -11,8 +12,6 @@ settings
 
 data
     :{
-    frame-0
-        :{
         0:[0,0,0,1,0,0,0]
         1:[0,0,1,0,1,0,0]
         2:[0,1,0,0,0,1,0]
@@ -21,8 +20,6 @@ data
         5:[0,0,1,0,1,0,0]
         6:[0,0,0,1,0,0,0]
         length:7
-        ##would be time/duration if animated
-    }
     ##would be the frames 
 }
 
